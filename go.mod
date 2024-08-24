@@ -1,4 +1,4 @@
-module github.com/go-graphql
+module github.com/belovetech/go-graphql
 
 go 1.22.4
 

@@ -1,7 +1,3 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
 type Link {
   id: ID!
   title: String!
@@ -23,7 +19,7 @@ input NewLink {
   address: String!
 }
 
-input refreshToken {
+input RefreshTokenInput {
   token: String!
 }
 
@@ -41,5 +37,6 @@ type Mutation {
   createLink(input: NewLink!): Link!
   createUser(input: NewUser!): String!
   login(input: Login!): String!
-  refreshToken(input: refreshToken): String
+  # we'll talk about this in authentication section
+  refreshToken(input: RefreshTokenInput!): String!
 }
