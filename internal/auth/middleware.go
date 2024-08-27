@@ -2,8 +2,10 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/belovetech/go-graphql/internal/users"
 	"github.com/belovetech/go-graphql/pkg/jwt"
@@ -26,8 +28,7 @@ func Middleware() func(http.Handler) http.Handler {
 				return
 			}
 
-			tokenStr := header
-
+			tokenStr := strings.Split(header, " ")[1]
 			username, err := jwt.ParseToken(tokenStr)
 			if err != nil {
 				http.Error(w, "Invalid token", http.StatusForbidden)
@@ -54,5 +55,7 @@ func Middleware() func(http.Handler) http.Handler {
 
 func ForContect(ctx context.Context) *users.User {
 	raw, _ := ctx.Value(userCtxKey).(*users.User)
+
+	fmt.Print(raw)
 	return raw
 }
