@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_DATABASE: hackernews
+      MYSQL_ROOT_PASSWORD: dbpass
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./mysql.d/my.cnf:/etc/my.cnf
+    networks:
+      - hackernews
+
+networks:
+  hackernews:
+    driver: bridge
