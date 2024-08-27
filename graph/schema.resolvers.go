@@ -11,6 +11,8 @@ import (
 
 	"github.com/belovetech/go-graphql/graph/model"
 	"github.com/belovetech/go-graphql/internal/links"
+	"github.com/belovetech/go-graphql/internal/users"
+	"github.com/belovetech/go-graphql/pkg/jwt"
 )
 
 // CreateLink is the resolver for the createLink field.
@@ -24,7 +26,17 @@ func (r *mutationResolver) CreateLink(ctx context.Context, input model.NewLink) 
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (string, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+	var user users.User
+
+	user.Username = input.Username
+	user.Password = input.Password
+	user.Create()
+
+	token, err := jwt.GenerateToken(user.Username)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }
 
 // Login is the resolver for the login field.
